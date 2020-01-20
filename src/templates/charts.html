@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% block content %}
+
+  <script>
+
+   {% block jquery %}
+   var endpoint = '/api/chart/data/'
+   var defaultData1 = []
+   var defaultData2 = []
+   var defaultData3= []
+   var defaultData4 = []
+   var defaultData5= []
+   var defaultData6 = []
+   var defaultData7= []
+   // var defaultData8 = []
+   // var defaultData9= []
+   var labels = [];
+   $.ajax({
+       method: "GET",
+       url: endpoint,
+       success: function(data){
+           labels = data.labels
+           defaultData1 = data.default1
+           defaultData2 = data.default2
+           defaultData3 = data.default3
+           defaultData4 = data.default4
+           defaultData5= data.default5
+           defaultData6 = data.default6
+           defaultData7= data.default7
+           defaultData8 = data.default8
+           defaultData9= data.default9
+           setChart()
+       },
+
+       error: function(error_data){
+           console.log("error")
+           console.log(error_data)
+       }
+   })
+
+
+ </script>
+ <div class="col-md-12">
+   <div class="col-md-6">
+     <canvas id="line-chart" width="200" height="150"></canvas>
+   </div>
+   <div class="col-md-6">
+     <canvas id="sepsis-chart" width="200" height="150"></canvas>
+   </div>
+ </div>
+
+  <script>
+    function setChart(){
+      new Chart(document.getElementById("line-chart"), {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+            data: defaultData1,
+            label: "Heart Rate",
+            borderColor: "#3e95cd",
+            fill: false
+          }, {
+            data: defaultData2,
+            label: "Temperature",
+            borderColor: "#8e5ea2",
+            fill: false
+          }, {
+            data: defaultData3,
+            label: "Respiratory",
+            borderColor: "#3cba9f",
+            fill: false
+          }, {
+            data: defaultData4,
+            label: "WBC",
+            borderColor: "#e8c3b9",
+            fill: false
+          }, {
+            data: defaultData5,
+            label: "Mean-arterial-pressure",
+            borderColor: "#c45850",
+            fill: false
+          },{
+            data: defaultData6,
+            label: "GENDER",
+            borderColor: "#e8c3b9",
+            fill: false
+          }, {
+            data: defaultData7,
+            label: "AGE",
+            borderColor: "#c45850",
+            fill: false
+          }
+        ]
+      },
+      options: {
+        title: {
+          display: true,
+          text: 'Sepsis Analysis'
+        }
+      }
+    });
+
+      new Chart(document.getElementById("sepsis-chart"), {
+      type: 'bar',
+      data: {
+          labels: labels,
+          datasets: [{
+            data: defaultData8,
+            label: "Heart Rate",
+            borderColor: "#3e95cd",
+            fill: false
+          }, {
+            data: defaultData9,
+            label: "Temperature",
+            borderColor: "#8e5ea2",
+            fill: false
+          },
+
+          }]
+      },
+      options: {
+        title: {
+          display: true,
+          text: 'Sepsis '
+        }
+      }
+  });
+
+  }
+  </script>
+  {% endblock %}
+
+{% endblock content %}
